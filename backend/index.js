@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const serverless = require("serverless-http");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
@@ -19,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/auth", authRoutes);
-app.use("/api/recruiter", recruiterRoutes);
+app.use("/.netlify/functions/api/auth", authRoutes);
+app.use("/.netlify/functions/api/recruiter", recruiterRoutes);
 
-app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
+module.exports.handler = serverless(app);
